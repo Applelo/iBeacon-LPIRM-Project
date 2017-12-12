@@ -33,6 +33,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
+
 public class StoryActivity extends Activity {
 
     private static final String LOG_TAG = "StoryActivity";
@@ -42,7 +45,7 @@ public class StoryActivity extends Activity {
     private Handler scanHandler = new Handler();
     private int scan_interval_ms = 5000;
     private boolean isScanning = false;
-    final int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 1;
+    final int RC_LOCATION = 1;
     private int actualMajor;
     private int actualMinor;
     private int nearRssi;
@@ -130,6 +133,27 @@ public class StoryActivity extends Activity {
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @AfterPermissionGranted(RC_LOCATION)
+    private void methodPermission() {
+        String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
+        if (EasyPermissions.hasPermissions(this, perms)) {
+            // Already have permission, do the thing
+            // ...
+        } else {
+            // Do not have permissions, request them now
+            EasyPermissions.requestPermissions(this, "wesh",
+                    RC_LOCATION, perms);
+        }
+    }
+
     static final char[] hexArray = "0123456789ABCDEF".toCharArray();
     private static String bytesToHex(byte[] bytes) {
         char[] hexChars = new char[bytes.length * 2];
@@ -215,14 +239,15 @@ public class StoryActivity extends Activity {
 
             }
         });
-        salles.add(new Salle(10, 3, "Salle1", R.drawable.ic_launcher_background, "Je suis une salle, je suis le beacon de Loïs"));
-        salles.add(new Salle(7, 4, "Salle2", R.drawable.ic_launcher_background, "Je suis une salle, je suis le beacon de Adrian"));
+        salles.add(new Salle(1, 1, "C101", R.drawable.ic_launcher_background, "La C101 est la salle priviligié pour créer et développer des programmes innovants."));
+        salles.add(new Salle(1, 2, "C105", R.drawable.ic_launcher_background, "Elle est habité par l'esprit de la DGSE, keep warning"));
+        salles.add(new Salle(1, 3, "Secrétariat R&T", R.drawable.ic_launcher_background, "C'est beau"));
+        salles.add(new Salle(2, 1, "Salle Café Prof", R.drawable.ic_launcher_background, "Si vous êtes professeur et que vous avez envie de faire une pause avec vos confrères, vous êtes au bonne endroit."));
+        salles.add(new Salle(2, 2, "Bureau M.Faucher", R.drawable.ic_launcher_background, "Ah"));
+        salles.add(new Salle(2, 3, "Secrétariat Info", R.drawable.ic_launcher_background, "Un problème, c'est ici qu'on trouve la solution"));
 
 
-        if (Build.VERSION.SDK_INT >= 23) {
-            // Marshmallow+ Permission APIs
-            needPermission();
-        }
+        methodPermission();
 
         // init BLE
         btManager = (BluetoothManager)getSystemService(Context.BLUETOOTH_SERVICE);
@@ -248,100 +273,6 @@ public class StoryActivity extends Activity {
             return distance;
         }
     }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS: {
-                Map<String, Integer> perms = new HashMap<String, Integer>();
-                // Initial
-                perms.put(Manifest.permission.ACCESS_FINE_LOCATION, PackageManager.PERMISSION_GRANTED);
-
-
-                // Fill with results
-                for (int i = 0; i < permissions.length; i++)
-                    perms.put(permissions[i], grantResults[i]);
-
-                // Check for ACCESS_FINE_LOCATION
-                if (perms.get(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-
-                        ) {
-                    // All Permissions Granted
-
-                    // Permission Denied
-                    //Toast.makeText(StoryActivity.this, "All Permission GRANTED !! Thank You :)", Toast.LENGTH_SHORT).show();
-
-
-                } else {
-                    // Permission Denied
-                    //Toast.makeText(StoryActivity.this, "One or More Permissions are DENIED Exiting App :(", Toast.LENGTH_SHORT).show();
-
-                    finish();
-                }
-            }
-            break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-    }
-
-
-    @TargetApi(Build.VERSION_CODES.M)
-    private void needPermission() {
-        List<String> permissionsNeeded = new ArrayList<String>();
-
-        final List<String> permissionsList = new ArrayList<String>();
-        if (!addPermission(permissionsList, Manifest.permission.ACCESS_FINE_LOCATION))
-            permissionsNeeded.add("Connaitre la localisation");
-
-        if (permissionsList.size() > 0) {
-            if (permissionsNeeded.size() > 0) {
-
-                // Need Rationale
-                String message = "L'application a besoin d'accéder à votre localisation pour fonctionner correctement.";
-
-                for (int i = 1; i < permissionsNeeded.size(); i++)
-                    message = message + ", " + permissionsNeeded.get(i);
-
-                showMessageOKCancel(message,
-                        new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
-                                        REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
-                            }
-                        });
-                return;
-            }
-            requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
-                    REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
-            return;
-        }
-
-    }
-
-    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
-        new AlertDialog.Builder(StoryActivity.this)
-                .setMessage(message)
-                .setPositiveButton("OK", okListener)
-                .setNegativeButton("Annuler", null)
-                .create()
-                .show();
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    private boolean addPermission(List<String> permissionsList, String permission) {
-
-        if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
-            permissionsList.add(permission);
-            // Check for Rationale Option
-            if (!shouldShowRequestPermissionRationale(permission))
-                return false;
-        }
-        return true;
-    }
-
 
 
 }
