@@ -3,4 +3,6 @@
     <string name="salles">Salles</string>
     <string name="login_text">Login</string>
     <string name="mettez_carte_text">Veuillez mettre votre carte Izly</string>
+    <string name="card_no_reconu">Carte non reconnu</string>
+    <string name="dissmis">dissmis</string>
 </resources>

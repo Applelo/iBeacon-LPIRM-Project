@@ -9,7 +9,9 @@ import android.nfc.Tag;
 import android.nfc.tech.NfcA;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -27,6 +29,7 @@ public class LoginActivity extends Activity {
     String[][] techs;
     PendingIntent pendingIntent;
     NfcAdapter nfcAdapter;
+    long[] cards = new long[]{709826816, 308221696};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,8 +70,26 @@ public class LoginActivity extends Activity {
         afficherInfo(number);
     }
 
+    Snackbar snackbar;
     public void afficherInfo(long number) {
+        boolean ouvrir = false;
         Log.e("Tag", number + "");
+        for (int i = 0; i < cards.length; i++){
+            if (cards[i] == number){
+                ouvrir = true;
+            }
+        }
+        if (ouvrir){
+            startActivity(new Intent(this, StoryActivity.class));
+        }else {
+            snackbar = Snackbar.make(this.getCurrentFocus(), R.string.card_no_reconu, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.dissmis, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    snackbar.dismiss();
+                }
+            });
+        }
     }
 
     public void startAnim(){
