@@ -19,7 +19,7 @@
     <LinearLayout android:id="@+id/bts"
         android:background="#ffffff"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="500dp"
         android:orientation="vertical"
         app:behavior_hideable="false"
         app:behavior_peekHeight="50dp"
