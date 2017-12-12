@@ -190,6 +190,7 @@ public class StoryActivity extends Activity {
         bts.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
+
                 if (btsState != newState){
                     switch (newState){
                         case BottomSheetBehavior.STATE_COLLAPSED:
