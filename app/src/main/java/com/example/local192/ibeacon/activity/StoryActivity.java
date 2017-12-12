@@ -226,10 +226,10 @@ public class StoryActivity extends Activity {
                     fab.animate();
                     switch (newState){
                         case BottomSheetBehavior.STATE_COLLAPSED:
-                            fab.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_arrow_upward_white_18dp));
+                            fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_upward_white_18dp));
                             break;
                         case BottomSheetBehavior.STATE_EXPANDED:
-                            fab.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_arrow_downward_white_18dp));
+                            fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_downward_white_18dp));
                             break;
                         default:
                             Log.e("BottomSheetState", "Not know");
