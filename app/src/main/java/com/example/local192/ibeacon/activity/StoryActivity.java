@@ -181,19 +181,25 @@ public class StoryActivity extends Activity {
         setContentView(R.layout.activity_story);
         bts = BottomSheetBehavior.from(findViewById(R.id.bts));
         fab = (FloatingActionButton) findViewById(R.id.fabBts);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bts.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
+        });
         bts.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
                 if (btsState != newState){
-                    fab.clearAnimation();
-                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.arrow_rotation);
-                    fab.setAnimation(animation);
-                    fab.animate();
                     switch (newState){
                         case BottomSheetBehavior.STATE_COLLAPSED:
                             fab.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_arrow_upward_white_18dp));
                             break;
                         case BottomSheetBehavior.STATE_EXPANDED:
+                            fab.clearAnimation();
+                            Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.arrow_rotation);
+                            fab.setAnimation(animation);
+                            fab.animate();
                             fab.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_arrow_downward_white_18dp));
                             break;
                         default:
