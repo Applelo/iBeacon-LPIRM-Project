@@ -4,6 +4,8 @@ import android.Manifest;
 
 import android.app.Activity;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
@@ -298,16 +300,9 @@ public class StoryActivity extends Activity {
     }
 
     private final void createNotification(Salle salle){
-
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_nfc_black_48dp)
-                        .setContentTitle("iBeacon")
-                        .setContentText("Tu es pret de la salle " + salle.getName());
-
-        mBuilder.build();
-
-
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification notification = new Notification(R.drawable.ic_nfc_black_48dp, "Tu es pret de la salle " + salle.getName(),  System.currentTimeMillis());
+        notificationManager.notify(1, notification);
     }
 
 
