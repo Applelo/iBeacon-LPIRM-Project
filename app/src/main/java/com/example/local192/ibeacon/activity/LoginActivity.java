@@ -97,5 +97,6 @@ public class LoginActivity extends Activity {
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.image_anim);
         imageNfc.setAnimation(animation);
         imageNfc.animate();
+
     }
 }
