@@ -1,39 +1,38 @@
 package com.example.local192.ibeacon.activity;
 
 import android.Manifest;
-import android.annotation.TargetApi;
+
 import android.app.Activity;
-import android.app.AlertDialog;
+
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.pm.PackageManager;
-import android.os.Build;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import com.github.clans.fab.FloatingActionButton;
+
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.EditText;
+
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.example.local192.ibeacon.R;
 import com.example.local192.ibeacon.adapter.SallesAdapter;
 import com.example.local192.ibeacon.model.Salle;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
+
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -46,6 +45,7 @@ public class StoryActivity extends Activity {
     private BluetoothAdapter btAdapter;
     private Handler scanHandler = new Handler();
     private int scan_interval_ms = 5000;
+    final private static int mNotificationId = 12354;
     private boolean isScanning = false;
     final int RC_LOCATION = 1;
     private int actualMajor;
@@ -129,6 +129,7 @@ public class StoryActivity extends Activity {
                 textStory.setCompoundDrawablesWithIntrinsicBounds(0, salle.getDrawable(), 0, 0);
                 salle.setVisited(true);
                 sallesAdapter.notifyDataSetChanged();
+                createNotification(salle);
             }
         }
 
@@ -250,7 +251,7 @@ public class StoryActivity extends Activity {
             }
         });
         listSalles = (ListView) findViewById(R.id.listSalles);
-
+        salles.clear();
         salles.add(new Salle(1, 1, "C101", R.drawable.ic_launcher_background, "La C101 est la salle priviligié pour créer et développer des programmes innovants."));
         salles.add(new Salle(1, 2, "C105", R.drawable.ic_launcher_background, "Elle est habité par l'esprit de la DGSE, keep warning"));
         salles.add(new Salle(1, 3, "Secrétariat R&T", R.drawable.ic_launcher_background, "C'est beau"));
@@ -285,6 +286,19 @@ public class StoryActivity extends Activity {
             double distance =  (0.89976)*Math.pow(ratio,7.7095) + 0.111;
             return distance;
         }
+    }
+
+    private final void createNotification(Salle salle){
+
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.ic_nfc_black_48dp)
+                        .setContentTitle("iBeacon")
+                        .setContentText("Tu es pret de la salle " + salle.getName());
+
+        mBuilder.build();
+
+
     }
 
 
