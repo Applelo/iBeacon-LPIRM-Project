@@ -6,11 +6,13 @@ import android.app.Activity;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -300,8 +302,11 @@ public class StoryActivity extends Activity {
     }
 
     private final void createNotification(Salle salle){
+        Intent intent = new Intent(this, StoryActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = new Notification.Builder(this)
+                .setContentIntent(pendingIntent)
                 .setContentTitle("iBeacons")
                 .setContentText("Tu es proche de la salle : " + salle.getName())
                 .setSmallIcon(R.drawable.ic_nfc_black_48dp)
