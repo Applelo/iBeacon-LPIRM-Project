@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class StoryActivity extends Activity {
 
-    private static final String LOG_TAG = "MainActivity";
+    private static final String LOG_TAG = "StoryActivity";
     private BluetoothManager btManager;
     private BluetoothAdapter btAdapter;
     private Handler scanHandler = new Handler();
@@ -75,7 +75,6 @@ public class StoryActivity extends Activity {
 
                 // minor
                 final int minor = (scanRecord[startByte + 22] & 0xff) * 0x100 + (scanRecord[startByte + 23] & 0xff);
-
 
 
                 if (major == 10 && minor == 3) {

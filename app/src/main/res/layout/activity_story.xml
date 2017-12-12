@@ -5,19 +5,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.local192.ibeacon.activity.StoryActivity">
-    <LinearLayout
+
+
+        <TextView
+            android:drawableTop="@drawable/ic_launcher_foreground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:text="help"
+            android:id="@+id/textStory"/>
+
+
+    <LinearLayout android:id="@+id/bts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:behavior_hideable="false"
         app:behavior_peekHeight="50dp"
         app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
-        <TextView android:text="@string/salles"
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="50dp"/>
+            android:layout_height="50dp"
+            android:background="@color/colorPrimaryDark"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text="@string/salles"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite" />
 
         <ListView android:id="@+id/listSalles"
-            android:divider="#ffffff"
+            android:background="@color/colorPrimary"
+            android:divider="@color/colorWhite"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>
