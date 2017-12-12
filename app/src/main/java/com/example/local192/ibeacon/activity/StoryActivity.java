@@ -213,7 +213,7 @@ public class StoryActivity extends Activity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bts.setState(BottomSheetBehavior.STATE_EXPANDED);
+                bts.setState(btsState == BottomSheetBehavior.STATE_COLLAPSED?BottomSheetBehavior.STATE_EXPANDED: BottomSheetBehavior.STATE_COLLAPSED);
             }
         });
         bts.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
