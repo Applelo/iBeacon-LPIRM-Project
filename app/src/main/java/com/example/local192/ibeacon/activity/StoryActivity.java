@@ -270,6 +270,15 @@ public class StoryActivity extends Activity {
         scanHandler.post(scanRunnable);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (btsState == BottomSheetBehavior.STATE_EXPANDED){
+            bts.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        }else {
+            super.onBackPressed();
+        }
+    }
+
     private double calculateDistance(int rssi) {
 
         int txPower = -59; //hard coded power value. Usually ranges between -59 to -65
