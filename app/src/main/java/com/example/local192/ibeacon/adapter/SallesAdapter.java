@@ -42,7 +42,7 @@ public class SallesAdapter extends ArrayAdapter {
         checkVisited = (CheckBox) view.findViewById(R.id.checkBox);
         checkVisited.setEnabled(false);
         textSalle.setText(salles.get(position).getName());
-        checkVisited.setActivated(salles.get(position).isVisited());
+        checkVisited.setChecked(salles.get(position).isVisited());
         return view;
     }
 }
