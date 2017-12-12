@@ -10,7 +10,7 @@
         <TextView
             android:drawableTop="@drawable/ic_launcher_foreground"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="help"
             android:id="@+id/textStory"/>
@@ -28,14 +28,12 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/colorPrimaryDark"
-            android:paddingBottom="15dp"
-            android:paddingTop="15dp"
+            android:gravity="center"
             android:text="@string/salles"
             android:textAlignment="center"
             android:textColor="@color/colorWhite" />
 
         <ListView android:id="@+id/listSalles"
-            android:background="@color/colorPrimary"
             android:divider="@color/colorWhite"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
