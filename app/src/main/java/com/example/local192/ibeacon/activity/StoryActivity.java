@@ -22,10 +22,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.local192.ibeacon.R;
+import com.example.local192.ibeacon.adapter.SallesAdapter;
 import com.example.local192.ibeacon.model.Salle;
 
 import java.util.ArrayList;
@@ -126,6 +128,7 @@ public class StoryActivity extends Activity {
                 textStory.setText(salle.getText());
                 textStory.setCompoundDrawablesWithIntrinsicBounds(0, salle.getDrawable(), 0, 0);
                 salle.setVisited(true);
+                sallesAdapter.notifyDataSetChanged();
             }
         }
 
@@ -198,9 +201,10 @@ public class StoryActivity extends Activity {
     BottomSheetBehavior bts;
     FloatingActionButton fab;
     int btsState = BottomSheetBehavior.STATE_COLLAPSED;
+    ListView listSalles;
+    SallesAdapter sallesAdapter;
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story);
         bts = BottomSheetBehavior.from(findViewById(R.id.bts));
@@ -239,6 +243,8 @@ public class StoryActivity extends Activity {
 
             }
         });
+        listSalles = (ListView) findViewById(R.id.listSalles);
+
         salles.add(new Salle(1, 1, "C101", R.drawable.ic_launcher_background, "La C101 est la salle priviligié pour créer et développer des programmes innovants."));
         salles.add(new Salle(1, 2, "C105", R.drawable.ic_launcher_background, "Elle est habité par l'esprit de la DGSE, keep warning"));
         salles.add(new Salle(1, 3, "Secrétariat R&T", R.drawable.ic_launcher_background, "C'est beau"));
@@ -246,7 +252,8 @@ public class StoryActivity extends Activity {
         salles.add(new Salle(2, 2, "Bureau M.Faucher", R.drawable.ic_launcher_background, "Ah"));
         salles.add(new Salle(2, 3, "Secrétariat Info", R.drawable.ic_launcher_background, "Un problème, c'est ici qu'on trouve la solution"));
 
-
+        sallesAdapter = new SallesAdapter(this, salles);
+        listSalles.setAdapter(sallesAdapter);
         methodPermission();
 
         // init BLE

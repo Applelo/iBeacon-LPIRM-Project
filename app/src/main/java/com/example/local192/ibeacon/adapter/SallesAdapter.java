@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ActionMenuView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.Checkable;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
@@ -31,15 +33,16 @@ public class SallesAdapter extends ArrayAdapter {
     }
 
     TextView textSalle;
-    ImageView imageVisited;
+    CheckBox checkVisited;
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = activity.getLayoutInflater().inflate(R.layout.salles_adapter, parent, false);
         textSalle = (TextView) view.findViewById(R.id.textSalle);
-        imageVisited = (ImageView) view.findViewById(R.id.imageNfc);
+        checkVisited = (CheckBox) view.findViewById(R.id.checkBox);
+        checkVisited.setEnabled(false);
         textSalle.setText(salles.get(position).getName());
-
+        checkVisited.setActivated(salles.get(position).isVisited());
         return view;
     }
 }
