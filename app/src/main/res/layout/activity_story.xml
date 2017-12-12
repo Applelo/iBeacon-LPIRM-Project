@@ -8,6 +8,7 @@
 
 
         <TextView
+            android:drawableTop="@drawable/ic_launcher_foreground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -24,7 +25,6 @@
         app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
         <TextView
-            android:id="@+id/btsTitle"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/colorPrimaryDark"
@@ -39,4 +39,11 @@
             android:layout_height="match_parent"/>
     </LinearLayout>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabBts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/bts"
+        android:src="@drawable/ic_arrow_upward_white_18dp"
+        app:layout_anchorGravity="top|end" />
 </android.support.design.widget.CoordinatorLayout>

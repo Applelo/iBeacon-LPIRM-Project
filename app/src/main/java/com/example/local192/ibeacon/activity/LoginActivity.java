@@ -12,7 +12,6 @@ import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -31,7 +30,6 @@ public class LoginActivity extends Activity {
     PendingIntent pendingIntent;
     NfcAdapter nfcAdapter;
     long[] cards = new long[]{709826816, 308221696};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,18 +43,23 @@ public class LoginActivity extends Activity {
         filters = new IntentFilter[]{intentFilter};
         techs = new String[][]{new String[]{NfcA.class.getName()}};
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        if (nfcAdapter == null){
+            startActivity(new Intent(this, StoryActivity.class));
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         startAnim();
+        if (nfcAdapter != null)
         nfcAdapter.enableForegroundDispatch(this, pendingIntent, filters, techs);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        if (nfcAdapter != null)
         nfcAdapter.disableForegroundDispatch(this);
     }
 
@@ -91,9 +94,7 @@ public class LoginActivity extends Activity {
                 public void onClick(View v) {
                     snackbar.dismiss();
                 }
-
             });
-            snackbar.show();
         }
     }
 
