@@ -13,13 +13,18 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.local192.ibeacon.R;
 import com.example.local192.ibeacon.model.Salle;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -163,13 +168,28 @@ public class StoryActivity extends Activity {
             scanHandler.postDelayed(this, scan_interval_ms);
         }
     };
-
+    BottomSheetBehavior bts;
+    boolean btsState = false;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story);
 
+        bts = BottomSheetBehavior.from(findViewById(R.id.bts));
+        TextView btsTitle = (TextView) findViewById(R.id.btsTitle);
+        btsTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (btsState) {
+                    bts.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+                else {
+                    bts.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }
+               btsState = !btsState;
+            }
+        });
 
         salles.add(new Salle(10, 3, "Salle1", R.drawable.ic_launcher_background, "Je suis une salle, je suis le beacon de Loïs"));
         salles.add(new Salle(7, 4, "Salle2", R.drawable.ic_launcher_background, "Je suis une salle, je suis le beacon de Adrian"));

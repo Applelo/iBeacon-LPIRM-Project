@@ -8,7 +8,6 @@
 
 
         <TextView
-            android:drawableTop="@drawable/ic_launcher_foreground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -25,6 +24,7 @@
         app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
         <TextView
+            android:id="@+id/btsTitle"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/colorPrimaryDark"
