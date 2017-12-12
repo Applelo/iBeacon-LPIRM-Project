@@ -203,6 +203,7 @@ public class StoryActivity extends Activity {
     int btsState = BottomSheetBehavior.STATE_COLLAPSED;
     ListView listSalles;
     SallesAdapter sallesAdapter;
+    Animation animation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -220,16 +221,20 @@ public class StoryActivity extends Activity {
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
 
                 if (btsState != newState){
-                    fab.clearAnimation();
-                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.arrow_rotation);
-                    fab.setAnimation(animation);
-                    fab.animate();
                     switch (newState){
                         case BottomSheetBehavior.STATE_COLLAPSED:
                             fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_upward_white_18dp));
+                            fab.clearAnimation();
+                            animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.arrow_rotation);
+                            fab.setAnimation(animation);
+                            fab.animate();
                             break;
                         case BottomSheetBehavior.STATE_EXPANDED:
                             fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_downward_white_18dp));
+                            fab.clearAnimation();
+                            animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.arrow_rotation);
+                            fab.setAnimation(animation);
+                            fab.animate();
                             break;
                         default:
                             Log.e("BottomSheetState", "Not know");
