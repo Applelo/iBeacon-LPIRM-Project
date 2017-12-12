@@ -14,9 +14,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.local192.ibeacon.R;
+import com.example.local192.ibeacon.model.Salle;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,13 +29,16 @@ import java.util.Map;
 public class StoryActivity extends Activity {
 
     private static final String LOG_TAG = "StoryActivity";
+    private static final List<Salle> salles = new ArrayList<Salle>();
     private BluetoothManager btManager;
     private BluetoothAdapter btAdapter;
     private Handler scanHandler = new Handler();
     private int scan_interval_ms = 5000;
     private boolean isScanning = false;
     final int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 1;
-
+    private int actualMajor;
+    private int actualMinor;
+    private int nearRssi;
 
     // ------------------------------------------------------------------------
 // Inner classes
@@ -76,9 +82,14 @@ public class StoryActivity extends Activity {
                 // minor
                 final int minor = (scanRecord[startByte + 22] & 0xff) * 0x100 + (scanRecord[startByte + 23] & 0xff);
 
+                Log.i(LOG_TAG,"UUID: " +uuid + "\nmajor: " +major +"\nminor: " +minor + "\nrssi: " + rssi + "\nmeters: " + calculateDistance(rssi));
 
-                if (major == 10 && minor == 3) {
-                    Log.i(LOG_TAG,"UUID: " +uuid + "\nmajor: " +major +"\nminor: " +minor + "\nrssi: " + rssi + "\nmeters: " + calculateDistance(rssi));
+                if (rssi > -50 && (actualMinor != minor || actualMajor != major) ) {
+
+                    actualMajor = major;
+                    actualMinor = minor;
+                    updateStory();
+
                     /*String text;
                     text = "UUID: " + uuid;
                     tUuid.setText(text);
@@ -96,6 +107,21 @@ public class StoryActivity extends Activity {
 
         }
     };
+
+    private void updateStory() {
+        TextView textStory = (TextView) findViewById(R.id.textStory);
+
+        for (Salle salle : salles) {
+            if (salle.getMajor() == actualMajor && salle.getMinor() == actualMinor) {
+                textStory.setText(salle.getText());
+                textStory.setCompoundDrawablesWithIntrinsicBounds(0, salle.getDrawable(), 0, 0);
+                salle.setVisited(true);
+            }
+        }
+
+
+
+    }
 
     static final char[] hexArray = "0123456789ABCDEF".toCharArray();
     private static String bytesToHex(byte[] bytes) {
@@ -143,6 +169,11 @@ public class StoryActivity extends Activity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story);
+
+
+        salles.add(new Salle(10, 3, "Salle1", R.drawable.ic_launcher_background, "Je suis une salle, je suis le beacon de Loïs"));
+        salles.add(new Salle(7, 4, "Salle2", R.drawable.ic_launcher_background, "Je suis une salle, je suis le beacon de Adrian"));
+
 
         if (Build.VERSION.SDK_INT >= 23) {
             // Marshmallow+ Permission APIs
@@ -194,14 +225,12 @@ public class StoryActivity extends Activity {
                     // All Permissions Granted
 
                     // Permission Denied
-                    Toast.makeText(StoryActivity.this, "All Permission GRANTED !! Thank You :)", Toast.LENGTH_SHORT)
-                            .show();
+                    //Toast.makeText(StoryActivity.this, "All Permission GRANTED !! Thank You :)", Toast.LENGTH_SHORT).show();
 
 
                 } else {
                     // Permission Denied
-                    Toast.makeText(StoryActivity.this, "One or More Permissions are DENIED Exiting App :(", Toast.LENGTH_SHORT)
-                            .show();
+                    //Toast.makeText(StoryActivity.this, "One or More Permissions are DENIED Exiting App :(", Toast.LENGTH_SHORT).show();
 
                     finish();
                 }
@@ -219,13 +248,13 @@ public class StoryActivity extends Activity {
 
         final List<String> permissionsList = new ArrayList<String>();
         if (!addPermission(permissionsList, Manifest.permission.ACCESS_FINE_LOCATION))
-            permissionsNeeded.add("Show Location");
+            permissionsNeeded.add("Connaitre la localisation");
 
         if (permissionsList.size() > 0) {
             if (permissionsNeeded.size() > 0) {
 
                 // Need Rationale
-                String message = "App need access to " + permissionsNeeded.get(0);
+                String message = "L'application a besoin d'accéder à votre localisation pour fonctionner correctement.";
 
                 for (int i = 1; i < permissionsNeeded.size(); i++)
                     message = message + ", " + permissionsNeeded.get(i);
@@ -246,15 +275,13 @@ public class StoryActivity extends Activity {
             return;
         }
 
-        Toast.makeText(StoryActivity.this, "No new Permission Required- Launching App .You are Awesome!!", Toast.LENGTH_SHORT)
-                .show();
     }
 
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(StoryActivity.this)
                 .setMessage(message)
                 .setPositiveButton("OK", okListener)
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton("Annuler", null)
                 .create()
                 .show();
     }

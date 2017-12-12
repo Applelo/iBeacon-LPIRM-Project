@@ -99,4 +99,10 @@ public class LoginActivity extends Activity {
         imageNfc.animate();
 
     }
+
+
+
+
+
+
 }
