@@ -220,15 +220,15 @@ public class StoryActivity extends Activity {
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
 
                 if (btsState != newState){
+                    fab.clearAnimation();
+                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.arrow_rotation);
+                    fab.setAnimation(animation);
+                    fab.animate();
                     switch (newState){
                         case BottomSheetBehavior.STATE_COLLAPSED:
                             fab.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_arrow_upward_white_18dp));
                             break;
                         case BottomSheetBehavior.STATE_EXPANDED:
-                            fab.clearAnimation();
-                            Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.arrow_rotation);
-                            fab.setAnimation(animation);
-                            fab.animate();
                             fab.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_arrow_downward_white_18dp));
                             break;
                         default:
