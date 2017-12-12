@@ -219,7 +219,6 @@ public class StoryActivity extends Activity {
         bts.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
-
                 if (btsState != newState){
                     switch (newState){
                         case BottomSheetBehavior.STATE_COLLAPSED:
@@ -228,6 +227,7 @@ public class StoryActivity extends Activity {
                             animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.arrow_rotation);
                             fab.setAnimation(animation);
                             fab.animate();
+                            btsState = newState;
                             break;
                         case BottomSheetBehavior.STATE_EXPANDED:
                             fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_downward_white_18dp));
@@ -235,6 +235,7 @@ public class StoryActivity extends Activity {
                             animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.arrow_rotation);
                             fab.setAnimation(animation);
                             fab.animate();
+                            btsState = newState;
                             break;
                         default:
                             Log.e("BottomSheetState", "Not know");
