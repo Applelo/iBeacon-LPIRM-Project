@@ -12,7 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="help"
+            android:text="Commencez par approcher de la première salle."
             android:id="@+id/textStory"/>
 
 
