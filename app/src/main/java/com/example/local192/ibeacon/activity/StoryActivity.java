@@ -301,7 +301,12 @@ public class StoryActivity extends Activity {
 
     private final void createNotification(Salle salle){
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification notification = new Notification(R.drawable.ic_nfc_black_48dp, "Tu es pret de la salle " + salle.getName(),  System.currentTimeMillis());
+        Notification notification = new Notification.Builder(this)
+                .setContentTitle("iBeacons")
+                .setContentText("Tu es proche de la salle : " + salle.getName())
+                .setSmallIcon(R.drawable.ic_nfc_black_48dp)
+                .setVibrate(new long[]{100, 250, 100, 250})
+                .build();
         notificationManager.notify(1, notification);
     }
 
