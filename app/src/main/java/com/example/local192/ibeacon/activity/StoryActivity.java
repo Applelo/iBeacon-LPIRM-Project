@@ -126,38 +126,32 @@ public class StoryActivity extends Activity {
 
     private void updateStory() {
         TextView textStory = (TextView) findViewById(R.id.textStory);
-
         for (Salle salle : salles) {
             if (salle.getMajor() == actualMajor && salle.getMinor() == actualMinor) {
                 textStory.setText(salle.getName() + " : " + salle.getText());
                 textStory.setCompoundDrawablesWithIntrinsicBounds(0, salle.getDrawable(), 0, 0);
-                salle.setVisited(true);
+                if (salle.isVisited() == false) {
+                    score++;
+                    if (score == salles.size()) {
+                        new ParticleSystem(this, 40, R.drawable.confeti2, 10000)
+                                .setSpeedModuleAndAngleRange(0f, 0.3f, 180, 180)
+                                .setRotationSpeed(144)
+                                .setAcceleration(0.00005f, 90)
+                                .emit(findViewById(R.id.emiter_top_right), 2);
+
+                        new ParticleSystem(this, 40, R.drawable.confeti3, 10000)
+                                .setSpeedModuleAndAngleRange(0f, 0.3f, 0, 0)
+                                .setRotationSpeed(144)
+                                .setAcceleration(0.00005f, 90)
+                                .emit(findViewById(R.id.emiter_top_left), 2);
+                    }
+                    salle.setVisited(true);
+                }
                 sallesAdapter.notifyDataSetChanged();
                 createNotification(salle);
 
-
-
-
-
             }
         }
-
-        //if (score == salles.size()) {
-            new ParticleSystem(this, 80, R.drawable.confeti2, 10000)
-                    .setSpeedModuleAndAngleRange(0f, 0.3f, 180, 180)
-                    .setRotationSpeed(144)
-                    .setAcceleration(0.00005f, 90)
-                    .emit(findViewById(R.id.emiter_top_right), 8);
-
-            new ParticleSystem(this, 80, R.drawable.confeti3, 10000)
-                    .setSpeedModuleAndAngleRange(0f, 0.3f, 0, 0)
-                    .setRotationSpeed(144)
-                    .setAcceleration(0.00005f, 90)
-                    .emit(findViewById(R.id.emiter_top_left), 8);
-        //}
-
-
-
     }
 
     @Override
