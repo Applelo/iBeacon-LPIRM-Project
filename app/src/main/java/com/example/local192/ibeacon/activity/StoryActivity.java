@@ -32,6 +32,7 @@ import android.widget.TextView;
 import com.example.local192.ibeacon.R;
 import com.example.local192.ibeacon.adapter.SallesAdapter;
 import com.example.local192.ibeacon.model.Salle;
+import com.plattysoft.leonids.ParticleSystem;
 
 import java.util.ArrayList;
 
@@ -49,12 +50,11 @@ public class StoryActivity extends Activity {
     private BluetoothAdapter btAdapter;
     private Handler scanHandler = new Handler();
     private int scan_interval_ms = 5000;
-    final private static int mNotificationId = 12354;
     private boolean isScanning = false;
     final int RC_LOCATION = 1;
     private int actualMajor;
     private int actualMinor;
-    private int nearRssi;
+    private int score;
 
     // ------------------------------------------------------------------------
 // Inner classes
@@ -100,7 +100,7 @@ public class StoryActivity extends Activity {
 
                 Log.i(LOG_TAG,"UUID: " +uuid + "\nmajor: " +major +"\nminor: " +minor + "\nrssi: " + rssi + "\nmeters: " + calculateDistance(rssi));
 
-                if (rssi > -50 && (actualMinor != minor || actualMajor != major) ) {
+                if (rssi > -65 && (actualMinor != minor || actualMajor != major) ) {
 
                     actualMajor = major;
                     actualMinor = minor;
@@ -129,13 +129,32 @@ public class StoryActivity extends Activity {
 
         for (Salle salle : salles) {
             if (salle.getMajor() == actualMajor && salle.getMinor() == actualMinor) {
-                textStory.setText(salle.getText());
+                textStory.setText(salle.getName() + " : " + salle.getText());
                 textStory.setCompoundDrawablesWithIntrinsicBounds(0, salle.getDrawable(), 0, 0);
                 salle.setVisited(true);
                 sallesAdapter.notifyDataSetChanged();
                 createNotification(salle);
+
+
+
+
+
             }
         }
+
+        //if (score == salles.size()) {
+            new ParticleSystem(this, 80, R.drawable.confeti2, 10000)
+                    .setSpeedModuleAndAngleRange(0f, 0.3f, 180, 180)
+                    .setRotationSpeed(144)
+                    .setAcceleration(0.00005f, 90)
+                    .emit(findViewById(R.id.emiter_top_right), 8);
+
+            new ParticleSystem(this, 80, R.drawable.confeti3, 10000)
+                    .setSpeedModuleAndAngleRange(0f, 0.3f, 0, 0)
+                    .setRotationSpeed(144)
+                    .setAcceleration(0.00005f, 90)
+                    .emit(findViewById(R.id.emiter_top_left), 8);
+        //}
 
 
 

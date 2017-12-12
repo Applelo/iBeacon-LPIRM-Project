@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context="com.example.local192.ibeacon.activity.StoryActivity">
 
+    <View android:id="@+id/emiter_top_left"
+        android:layout_gravity="top|left"
+        android:layout_marginTop="-20dp"
+        android:layout_width="1dp"
+        android:layout_height="1dp" />
+
+    <View android:id="@+id/emiter_top_right"
+        android:layout_gravity="top|right"
+        android:layout_marginTop="-20dp"
+        android:layout_width="1dp"
+        android:layout_height="1dp" />
+
 
         <TextView
             android:drawableTop="@drawable/ic_launcher_foreground"
