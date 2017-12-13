@@ -105,18 +105,6 @@ public class StoryActivity extends Activity {
                     actualMajor = major;
                     actualMinor = minor;
                     updateStory();
-
-                    /*String text;
-                    text = "UUID: " + uuid;
-                    tUuid.setText(text);
-                    text = "Major: " + major;
-                    tMajor.setText(text);
-                    text = "Minor: " + minor;
-                    tMinor.setText(text);
-                    text = "Rssi: " + rssi;
-                    tRssi.setText(text);
-                    text = "Meters: " + calculateDistance(rssi);
-                    tMeters.setText(text);*/
                 }
 
             }
@@ -172,6 +160,10 @@ public class StoryActivity extends Activity {
             // Do not have permissions, request them now
             EasyPermissions.requestPermissions(this, "wesh",
                     RC_LOCATION, perms);
+        }
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (!mBluetoothAdapter.isEnabled()) {
+            mBluetoothAdapter.disable();
         }
     }
 
