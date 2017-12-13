@@ -254,12 +254,12 @@ public class StoryActivity extends Activity {
         });
         listSalles = (ListView) findViewById(R.id.listSalles);
         salles.clear();
-        salles.add(new Salle(1, 1, "C101", R.drawable.ic_launcher_background, "La C101 est la salle priviligié pour créer et développer des programmes innovants."));
-        salles.add(new Salle(1, 2, "C105", R.drawable.ic_launcher_background, "Elle est habité par l'esprit de la DGSE, keep warning"));
-        salles.add(new Salle(1, 3, "Secrétariat R&T", R.drawable.ic_launcher_background, "C'est beau"));
-        salles.add(new Salle(2, 1, "Salle Café Prof", R.drawable.ic_launcher_background, "Si vous êtes professeur et que vous avez envie de faire une pause avec vos confrères, vous êtes au bonne endroit."));
-        salles.add(new Salle(2, 2, "Bureau M.Faucher", R.drawable.ic_launcher_background, "Ah"));
-        salles.add(new Salle(2, 3, "Secrétariat Info", R.drawable.ic_launcher_background, "Un problème, c'est ici qu'on trouve la solution"));
+        salles.add(new Salle(1, 1, "C101", R.drawable.c101, "La salle C101 est la salle priviligiée pour créer et développer des programmes innovants. On dit que des start ups les plus connus sont nées juste ici."));
+        salles.add(new Salle(1, 2, "C105", R.drawable.c105, "C'est une salle pas propre. Jack l'éventreur y a commis plusieurs crimes dont certains sont reconnus comme les plus sanglants."));
+        salles.add(new Salle(1, 3, "Secrétariat R&T", R.drawable.c108, "C'est dans cette salle qu'on a inventé le modem 54k et Twitter. 5000 serveurs quantiques sont en services actuellement."));
+        salles.add(new Salle(2, 1, "Salle Café Prof", R.drawable.salle_reunion, "Si vous êtes professeur et que vous avez envie de faire une pause avec vos confrères, vous êtes au bonne endroit."));
+        salles.add(new Salle(2, 2, "Bureau M.Faucher", R.drawable.d109, "On y mine du bitcoin et on remplie la blockchain (cf.voir article Blockchain par le groupe 6 LPIRM récompensé par un Pullizer)"));
+        salles.add(new Salle(2, 3, "Secrétariat Info", R.drawable.d112, "Un problème, c'est ici qu'on trouve la solution. Il n'y a pas de service d'assistance informatique..."));
 
         sallesAdapter = new SallesAdapter(this, salles);
         listSalles.setAdapter(sallesAdapter);
