@@ -5,4 +5,6 @@
     <string name="mettez_carte_text">Veuillez mettre votre carte Izly</string>
     <string name="card_no_reconu">Carte non reconnu</string>
     <string name="dissmis">Masquer</string>
+    <string name="activate">Activer</string>
+    <string name="need_nfc">Besoin du NFC pour fonctionner</string>
 </resources>

@@ -43,6 +43,17 @@ public class LoginActivity extends Activity {
         filters = new IntentFilter[]{intentFilter};
         techs = new String[][]{new String[]{NfcA.class.getName()}};
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        if (!nfcAdapter.isEnabled()) {
+            snackbar = Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), R.string.need_nfc, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.activate, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                            snackbar.dismiss();
+                        }
+                    });
+            snackbar.show();
+        }
         if (nfcAdapter == null){
             startActivity(new Intent(this, StoryActivity.class));
         }

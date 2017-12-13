@@ -156,7 +156,7 @@ public class StoryActivity extends Activity {
         }
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (!mBluetoothAdapter.isEnabled()) {
-            mBluetoothAdapter.disable();
+            mBluetoothAdapter.enable();
         }
     }
 
