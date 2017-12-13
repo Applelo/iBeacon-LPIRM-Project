@@ -1,9 +1,7 @@
 package com.example.local192.ibeacon.activity;
 
 import android.Manifest;
-
 import android.app.Activity;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -11,33 +9,27 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
-import com.github.clans.fab.FloatingActionButton;
-
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 
 import com.example.local192.ibeacon.R;
 import com.example.local192.ibeacon.adapter.SallesAdapter;
 import com.example.local192.ibeacon.model.Salle;
+import com.github.clans.fab.FloatingActionButton;
 import com.plattysoft.leonids.ParticleSystem;
 
 import java.util.ArrayList;
-
 import java.util.List;
-
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -114,10 +106,11 @@ public class StoryActivity extends Activity {
 
     private void updateStory() {
         TextView textStory = (TextView) findViewById(R.id.textStory);
+        ImageView imageStory = (ImageView) findViewById(R.id.imageStory);
         for (Salle salle : salles) {
             if (salle.getMajor() == actualMajor && salle.getMinor() == actualMinor) {
                 textStory.setText(salle.getName() + " : " + salle.getText());
-                textStory.setCompoundDrawablesWithIntrinsicBounds(0, salle.getDrawable(), 0, 0);
+                imageStory.setImageDrawable(getDrawable(salle.getDrawable()));
                 if (salle.isVisited() == false) {
                     score++;
                     if (score == salles.size()) {

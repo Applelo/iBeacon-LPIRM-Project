@@ -5,27 +5,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.local192.ibeacon.activity.StoryActivity">
-
-    <View android:id="@+id/emiter_top_left"
-        android:layout_gravity="top|left"
-        android:layout_marginTop="-20dp"
-        android:layout_width="1dp"
-        android:layout_height="1dp" />
-
-    <View android:id="@+id/emiter_top_right"
-        android:layout_gravity="top|right"
-        android:layout_marginTop="-20dp"
-        android:layout_width="1dp"
-        android:layout_height="1dp" />
-
-
-        <TextView
-            android:drawableTop="@drawable/ic_launcher_foreground"
+    <ScrollView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+        <LinearLayout android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Commencez par approcher de la première salle."
-            android:id="@+id/textStory"/>
+            android:layout_height="wrap_content">
+            <View android:id="@+id/emiter_top_left"
+                android:layout_gravity="top|left"
+                android:layout_marginTop="-20dp"
+                android:layout_width="1dp"
+                android:layout_height="1dp" />
+            <View android:id="@+id/emiter_top_right"
+                android:layout_gravity="top|right"
+                android:layout_marginTop="-20dp"
+                android:layout_width="1dp"
+                android:layout_height="1dp" />
+
+            <ImageView android:id="@+id/imageStory"
+                android:scaleType="centerCrop"
+                android:layout_margin="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Commencez par approcher de la première salle."
+                android:id="@+id/textStory"/>
+        </LinearLayout>
+    </ScrollView>
+
 
 
     <LinearLayout android:id="@+id/bts"
