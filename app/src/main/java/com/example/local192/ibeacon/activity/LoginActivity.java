@@ -95,6 +95,7 @@ public class LoginActivity extends Activity {
                     snackbar.dismiss();
                 }
             });
+            snackbar.show();
         }
     }
 
